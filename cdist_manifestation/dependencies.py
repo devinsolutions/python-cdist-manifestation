@@ -22,9 +22,8 @@ def order_dependency():
 def require(*args):
     global _dependencies
 
-    orig_deps = list(_dependencies)
     _dependencies.extend(args)
 
     yield
 
-    _dependencies = orig_deps
+    del _dependencies[-len(args):]
