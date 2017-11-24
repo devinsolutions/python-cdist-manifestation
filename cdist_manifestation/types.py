@@ -3,8 +3,6 @@ import os
 from subprocess import Popen
 import sys
 
-from cdist_manifestation.dependencies import _dependencies, _order_dependency
-
 
 class Types:
     def __getattr__(self, name):
@@ -31,6 +29,8 @@ class Types:
                 process_args.extend(parameters)
 
             environment = dict(os.environ)
+
+            from cdist_manifestation.dependencies import _dependencies, _order_dependency
 
             if len(_dependencies) > 0:
                 environment['require'] = ' '.join(_dependencies)
