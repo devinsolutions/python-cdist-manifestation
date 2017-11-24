@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 setup(
     name='cdist-manifestation',
     version='1.0.0',
-    description='A library for calling cdist types from manifests written in Python.',
+    description='A helper for writing cdist manifests in Python',
     keywords=[
         'cdist'
     ],
