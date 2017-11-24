@@ -3,7 +3,7 @@ import os
 from subprocess import Popen
 import sys
 
-from cdist_manifestation.dependencies import _dependencies
+from cdist_manifestation.dependencies import _dependencies, _order_dependency
 
 
 class Types:
@@ -30,7 +30,12 @@ class Types:
 
                 process_args.extend(parameters)
 
-            Popen(process_args, env=dict(os.environ, require=' '.join(_dependencies))).wait()
+            environment = dict(os.environ, require=' '.join(_dependencies))
+
+            if _order_dependency:
+                environment['CDIST_ORDER_DEPENDENCY'] = 'on'
+
+            Popen(process_args, env=environment).wait()
 
             if object_id is None:
                 return type_name
