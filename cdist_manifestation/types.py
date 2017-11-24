@@ -1,12 +1,16 @@
 from itertools import chain
-from subprocess import run
+import os
+from subprocess import Popen
 import sys
+
+from cdist_manifestation.dependencies import _dependencies
 
 
 class Types:
     def __getattr__(self, name):
         def func(object_id=None, *args, **kwargs):
-            process_args = [f'__{name}']
+            type_name = f'__{name}'
+            process_args = [type_name]
 
             if object_id is not None:
                 process_args.append(str(object_id))
@@ -24,7 +28,12 @@ class Types:
 
                 process_args.extend(parameters)
 
-            run(process_args)
+            Popen(process_args, env=dict(os.environ, require=' '.join(_dependencies))).wait()
+
+            if object_id is None:
+                return type_name
+
+            return f"{type_name}/{str(object_id).lstrip('/')}"
 
         return func
 

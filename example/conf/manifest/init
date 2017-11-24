@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
-from cdist_manifestation.types import directory
+from cdist_manifestation.dependencies import require
+from cdist_manifestation.types import file, directory
 
-directory('/opt/bin', 'parents')
+opt_bin = directory('/opt/bin', 'parents')
+
+with require(opt_bin):
+    file('/opt/bin/test', mode=755)
