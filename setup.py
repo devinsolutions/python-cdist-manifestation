@@ -18,6 +18,7 @@ setup(
     ],
     extras_require={
         'test': [
+            'cdist',
             'flake8',
             'pep8-naming'
         ]

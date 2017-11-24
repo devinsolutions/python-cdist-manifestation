@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+
+from cdist_manifestation.types import directory
+
+directory('/opt')
