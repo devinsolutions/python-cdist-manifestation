@@ -5,9 +5,7 @@ from setuptools import find_packages, setup
 setup(
     name='cdist-manifestation',
     version='1.0.0',
-    description='''
-    A library which helps you with calling cdist types from manifests written in Python.
-    ''',
+    description='A helper for writing cdist manifests in Python',
     keywords=[
         'cdist'
     ],
@@ -20,6 +18,7 @@ setup(
     ],
     extras_require={
         'test': [
+            'cdist',
             'flake8',
             'pep8-naming'
         ]
