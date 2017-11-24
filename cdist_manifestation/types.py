@@ -30,7 +30,10 @@ class Types:
 
                 process_args.extend(parameters)
 
-            environment = dict(os.environ, require=' '.join(_dependencies))
+            environment = dict(os.environ)
+
+            if len(_dependencies) > 0:
+                environment['require'] = ' '.join(_dependencies)
 
             if _order_dependency:
                 environment['CDIST_ORDER_DEPENDENCY'] = 'on'
