@@ -2,4 +2,4 @@
 
 from cdist_manifestation.types import directory
 
-directory('/opt')
+directory('/opt/bin', 'parents')

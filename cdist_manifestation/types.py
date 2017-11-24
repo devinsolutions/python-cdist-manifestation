@@ -5,11 +5,14 @@ import sys
 
 class Types:
     def __getattr__(self, name):
-        def func(object_id=None, **kwargs):
+        def func(object_id=None, *args, **kwargs):
             process_args = [f'__{name}']
 
             if object_id is not None:
                 process_args.append(str(object_id))
+
+            for argument in args:
+                process_args.append(f'--{argument}')
 
             for param_name, param_value in kwargs.items():
                 param_name = f"--{param_name.replace('_', '-')}"
