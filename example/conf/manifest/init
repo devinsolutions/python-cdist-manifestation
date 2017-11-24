@@ -3,7 +3,7 @@
 from cdist_manifestation.dependencies import require
 from cdist_manifestation.types import file, directory
 
-opt_bin = directory('/opt/bin', 'parents')
+opt_bin = directory('/opt/bin', parents=True)
 
 with require(opt_bin):
     file('/opt/bin/test', mode=755)

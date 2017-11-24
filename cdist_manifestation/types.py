@@ -8,20 +8,22 @@ from cdist_manifestation.dependencies import _dependencies
 
 class Types:
     def __getattr__(self, name):
-        def func(object_id=None, *args, **kwargs):
+        def func(object_id=None, **kwargs):
             type_name = f'__{name}'
             process_args = [type_name]
 
             if object_id is not None:
                 process_args.append(str(object_id))
 
-            for argument in args:
-                process_args.append(f'--{argument}')
-
             for param_name, param_value in kwargs.items():
                 param_name = f"--{param_name.replace('_', '-')}"
 
-                if hasattr(param_value, '__iter__') and not isinstance(param_value, str):
+                if isinstance(param_value, bool):
+                    if param_value:
+                        parameters = [param_name]
+                    else:
+                        continue
+                elif hasattr(param_value, '__iter__') and not isinstance(param_value, str):
                     parameters = chain((param_name, str(value)) for value in param_value)
                 else:
                     parameters = param_name, str(param_value)
