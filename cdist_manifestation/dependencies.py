@@ -6,6 +6,10 @@ _order_dependency = False
 
 @contextmanager
 def order_dependency():
+    """
+    A context manager that emulates functionality of "CDIST_ORDER_DEPENDENCY"
+    environmental variable.
+    """
     global _order_dependency
 
     if not _order_dependency:
@@ -20,6 +24,13 @@ def order_dependency():
 
 @contextmanager
 def require(*args):
+    """
+    A context manager that emulates functionality of "require" environment
+    variable.
+
+    Args:
+        args: Dependecy strings to feed "require" environmental variable with
+    """
     global _dependencies
 
     _dependencies.extend(args)

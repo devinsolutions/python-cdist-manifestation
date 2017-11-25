@@ -4,9 +4,26 @@ from subprocess import Popen
 import sys
 
 
-class Types:
+class _Types:
+    """
+    This is a helper class that enables us to use __getattr__ for dynamic type
+    importing.
+    """
+
     def __getattr__(self, name):
-        def func(object_id=None, **kwargs):
+        def type_func(object_id=None, **kwargs):
+            """
+            This function generates a cdist type command that will be called
+            upon the function execution.
+
+            Args:
+                object_id: An object ID (optional)
+                kwargs: Additional type parameters. Hyphens in parameter name
+                    must be replaced with underscores.
+
+            Returns:
+                The object dependecy string.
+            """
             type_name = f'__{name}'
             process_args = [type_name]
 
@@ -45,7 +62,7 @@ class Types:
 
             return f"{type_name}/{str(object_id).lstrip('/')}"
 
-        return func
+        return type_func
 
 
-sys.modules[__name__] = Types()
+sys.modules[__name__] = _Types()
