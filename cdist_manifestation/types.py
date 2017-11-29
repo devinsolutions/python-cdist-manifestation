@@ -11,7 +11,7 @@ class _Types:
     importing.
     """
 
-    def __getattr__(self, name):
+    def __getattr__(self, name):  # noqa: C901
         type_name = f'__{name}'
 
         if shutil.which(type_name) is None:
