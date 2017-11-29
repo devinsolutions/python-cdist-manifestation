@@ -1,5 +1,6 @@
 from itertools import chain
 import os
+import shutil
 from subprocess import Popen
 import sys
 
@@ -11,6 +12,11 @@ class _Types:
     """
 
     def __getattr__(self, name):
+        type_name = f'__{name}'
+
+        if shutil.which(type_name) is None:
+            raise AttributeError(name)
+
         def type_func(object_id=None, **kwargs):
             """
             This function generates a cdist type command that will be called
@@ -24,7 +30,6 @@ class _Types:
             Returns:
                 The object dependecy string.
             """
-            type_name = f'__{name}'
             process_args = [type_name]
 
             if object_id is not None:
