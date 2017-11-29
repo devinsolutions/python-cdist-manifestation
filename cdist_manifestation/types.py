@@ -11,6 +11,12 @@ class _Types:
     importing.
     """
 
+    class InstantiationError(Exception):
+        """
+        This error is raised when a type exits with non-zero return code.
+        """
+        pass
+
     def __getattr__(self, name):  # noqa: C901
         type_name = f'__{name}'
 
@@ -60,7 +66,11 @@ class _Types:
             if _order_dependency:
                 environment['CDIST_ORDER_DEPENDENCY'] = 'on'
 
-            Popen(process_args, env=environment).wait()
+            process = Popen(process_args, env=environment)
+            process.wait()
+
+            if process.returncode != 0:
+                raise self.InstantiationError(f"Failed to instantiate type '{name}'")
 
             if object_id is None:
                 return type_name
