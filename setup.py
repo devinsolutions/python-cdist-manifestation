@@ -33,6 +33,7 @@ setup(
         'test': [
             'cdist',
             'flake8',
+            'flake8-bugbear',
             'pep8-naming'
         ]
     }
