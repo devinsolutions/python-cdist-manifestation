@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
+import os
+
 from cdist_manifestation.dependencies import order_dependency, require
 from cdist_manifestation.types import directory, file, link
+from cdist_manifestation.variables import manifest
 
 opt_bin = directory('/opt/bin', parents=True)
 
 with require(opt_bin):
-    file('/opt/bin/test', mode=755)
+    file('/opt/bin/test', mode=755, source=os.path.join(manifest, 'files', 'test'))
 
     with order_dependency():
         link('/opt/bin/test1', source='/opt/bin/test', type='symbolic')
