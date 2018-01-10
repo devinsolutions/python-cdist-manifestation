@@ -117,6 +117,23 @@ Which is equivalent to this:
 You can also nest ``order_dependency`` into ``require`` or vice versa. Nesting
 ``order_dependency`` into itself will not change the behavior.
 
+Environmental variables
+```````````````````````
+
+cdist-specific environmental variables, such as ``__manifest`` or ``__target_host``, can be
+imported from ``cdist_manifestation.variables`` module.
+
+Where trying to reference a file located in ``${__manifest}/files/test``, you can do it like this:
+
+.. code-block:: python
+
+    import os
+
+    from cdist_manifestation.types import file
+    from cdist_manifestation.variables import manifest
+
+    file('/test', source=os.path.join(manifest, 'files', 'test'))
+
 Examples
 --------
 
