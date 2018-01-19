@@ -50,7 +50,9 @@ class _Types:
                     else:
                         continue
                 elif hasattr(param_value, '__iter__') and not isinstance(param_value, str):
-                    parameters = chain((param_name, str(value)) for value in param_value)
+                    parameters = chain.from_iterable(
+                        (param_name, str(value)) for value in param_value
+                    )
                 else:
                     parameters = param_name, str(param_value)
 
